@@ -3,6 +3,8 @@
 // #include <mpi.h>
 #include <omp.h>
 
+
+
 void swap(int *a, int *b)
 {
     int t = *a;
@@ -28,6 +30,16 @@ int partition(int *arr, int low, int high)
     return (i + 1);
 }
 
+void quickSortSequential(int arr[], int low, int high) {
+    if (low < high) {
+        int pi = partition(arr, low, high); // Partition index
+
+        quickSort(arr, low, pi - 1);  // Sort before partition
+        quickSort(arr, pi + 1, high); // Sort after partition
+    }
+}
+
+
 void quickSort(int *arr, int low, int high)
 {
 
@@ -35,26 +47,26 @@ void quickSort(int *arr, int low, int high)
     {
         int pi = partition(arr, low, high);
 
-        // #pragma omp task
-        // {
-        //     quickSort(arr, low, pi - 1);
-        // }
-        // #pragma omp task
-        // {
-        //     quickSort(arr, pi + 1, high);
-        // }
-
-        #pragma omp parallel sections
+        #pragma omp task
         {
-            #pragma omp section
-            {
-                quickSort(arr, low, pi - 1);
-            }
-            #pragma omp section
-            {
-                quickSort(arr, pi + 1, high);
-            }
+            quickSort(arr, low, pi - 1);
         }
+        #pragma omp task
+        {
+            quickSort(arr, pi + 1, high);
+        }
+
+        // #pragma omp parallel sections
+        // {
+        //     #pragma omp section
+        //     {
+        //         quickSort(arr, low, pi - 1);
+        //     }
+        //     #pragma omp section
+        //     {
+        //         quickSort(arr, pi + 1, high);
+        //     }
+        // }
     }
 }
 
@@ -82,7 +94,13 @@ int main(int argc, char *argv[])
     // set time start
     double start = omp_get_wtime();
 
-    quickSort(data, 0, count - 1);
+    #	pragma omp parallel
+    { 
+      #	pragma omp single 
+      {
+        quickSort(data, 0, count - 1);
+      }
+    } 
 
     // set time end
     double end = omp_get_wtime();
