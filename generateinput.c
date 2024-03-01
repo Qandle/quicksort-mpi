@@ -6,10 +6,10 @@
 int main()
 {
     FILE *fp;
-    fp = fopen("input100.txt", "w");
+    fp = fopen("input10.txt", "w");
     srand(time(0));
-    fprintf(fp, "%d\n", 100);
-    for (int i = 0; i < 100; i++)
+    fprintf(fp, "%d\n", 10);
+    for (int i = 0; i < 10; i++)
     {
         fprintf(fp, "%d ", rand());
     }
