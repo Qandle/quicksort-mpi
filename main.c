@@ -95,7 +95,7 @@ void quickSortJarnGas(int *arr, int size)
     }
     // printf("\n");
 
-    if (size <= 20000 && size > 1) {
+    if (size <= 5000 && size > 1) {
         
           
           quickSort(arr, 0, size - 1);
@@ -179,32 +179,32 @@ void quickSortJarnGas(int *arr, int size)
         {
             // printf("---------------------------------------\n");
 
-            for (int i = 0; i < size; i++)
-            {
+            // for (int i = 0; i < size; i++)
+            // {
                 // printf("%d ", arr[i]);
-            }
+            // }
             // printf("\n");
             // printf("rank: %d, seperator: %d, start: %d, end: %d, leftPartPos: %d, rightPartPos: %d---------------------------------------\n", rank,seperator,start ,end , leftPartPos, rightPartPos);
             // printf("currentLeftSize: %d, currentRightSize: %d\n", currentLeftSize, currentRightSize);
             // printf("leftPartPos: %d, rightPartPos: %d\n", leftPartPos, rightPartPos);
             // printf("first item: %d, last item: %d\n", arr[start], arr[end]);
-            if (currentLeftSize > 0){
-              memcpy(tempArray + leftPartPos, arr + start, currentLeftSize * sizeof(int));
-              for (int i = 0; i < currentLeftSize; i++)
-              {
-                  // printf("%d ", tempArray[leftPartPos + i]);
-              }
-            }
+            if (currentLeftSize > 0)
+            memcpy(tempArray + leftPartPos, arr + start, currentLeftSize * sizeof(int));
+              // for (int i = 0; i < currentLeftSize; i++)
+              // {
+              //     // printf("%d ", tempArray[leftPartPos + i]);
+              // }
+            
           
             // for (int i = 0; i < currentLeftSize; i++)
             // {
             //     tempArray[leftPartPos + i] = arr[start + i];
             // }
             // printf("first part: ");
-            for (int i = 0; i < size; i++)
-            {
+            // for (int i = 0; i < size; i++)
+            // {
                 // printf("%d ", tempArray[i]);
-            }
+            // }
             // printf("\nexplode yet? rank:%d\n", rank);
             leftPartPos += currentLeftSize;
             if (currentRightSize > 0)
@@ -215,10 +215,10 @@ void quickSortJarnGas(int *arr, int size)
             // }
             rightPartPos += currentRightSize;
             // printf("second part: ");
-            for (int i = 0; i < size; i++)
-            {
+            // for (int i = 0; i < size; i++)
+            // {
                 // printf("%d ", tempArray[i]);
-            }
+            // }
             // printf("\nthread %d finish: leftPartPos: %d, rightPartPos: %d\n", rank, leftPartPos, rightPartPos);
         }
         // printf("not explosion middle: %d\n", middle);
@@ -229,16 +229,16 @@ void quickSortJarnGas(int *arr, int size)
 
     // #pragma omp barrier
     }
-    if (!shouldSequential) {
-      // printf("tempArr\n");
-      for (int i = 0; i < size; i++)
-      {
-          // printf("%d ", tempArray[i]);
-      }
-      // printf("\n");
-    }else {
+    // if (!shouldSequential) {
+    //   // printf("tempArr\n");
+    //   // for (int i = 0; i < size; i++)
+    //   // {
+    //       // printf("%d ", tempArray[i]);
+    //   // }
+    //   // printf("\n");
+    // }else {
 
-    }
+    // }
     
         // return;
     
@@ -248,10 +248,10 @@ void quickSortJarnGas(int *arr, int size)
       quickSort(arr, 0, size - 1);
       free(tempArray);
       // printf("Seqarr\n");
-      for (int i = 0; i < size; i++)
-      {
+      // for (int i = 0; i < size; i++)
+      // {
           // printf("%d ", arr[i]);
-      }
+      // }
       // printf("\n");
 
       return;
@@ -263,16 +263,16 @@ void quickSortJarnGas(int *arr, int size)
     // printf("will sort left: %d, left start at%d\n", middle, *tempArray);
     // printf("will sort right: %d, right start at: %d\n", size - middle,*(tempArray + middle));
     // printf("will sort left of array\n");
-    for (int i = 0; i < middle; i++)
-    {
+    // for (int i = 0; i < middle; i++)
+    // {
         // printf("%d ", tempArray[i]);
-    }
+    // }
     // printf("\n");
     // printf("will sort right of array\n");
-    for (int i = 0; i < size - middle; i++)
-    {
+    // for (int i = 0; i < size - middle; i++)
+    // {
         // printf("%d ", tempArray[middle + i]);
-    }
+    // }
     // printf("\n");
     // printf("left sort\n");
     quickSortJarnGas(tempArray, middle);
@@ -331,7 +331,8 @@ int main(int argc, char *argv[])
     //         }
     //     }
 
-    quickSortJarnGas(data, count);
+    // quickSortJarnGas(data, count);
+    quickSortSequential(data, 0, count - 1);
 
     // set time end
     double end = omp_get_wtime();
